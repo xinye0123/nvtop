@@ -94,7 +94,7 @@ else()
   set(METAX_SUPPORT_DEFAULT ON)
 endif()
 
-# TPU and Enflame GCU support is only available on Linux
+# TPU, Enflame GCU and MTT support is only available on Linux
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
   # Check for libtpuinfo.so to set the default for TPU support
   find_library(LIBTPUINFO
@@ -108,9 +108,22 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(TPU_SUPPORT_DEFAULT ON)
   endif()
   set(ENFLAME_SUPPORT_DEFAULT ON)
+  
+  # Check for libmtml.so to set the default for MTT support
+  find_library(LIBMTML
+    NAMES libmtml.so
+    PATHS /usr/lib /usr/lib64 /usr/local/lib /usr/local/lib64
+    HINTS ${CMAKE_INSTALL_PREFIX}/lib ${CMAKE_INSTALL_PREFIX}/lib64 lib lib64
+  )
+  if (NOT LIBMTML)
+    set(MTT_SUPPORT_DEFAULT OFF)
+  else()
+    set(MTT_SUPPORT_DEFAULT ON)
+  endif()
 else()
   set(TPU_SUPPORT_DEFAULT OFF)
   set(ENFLAME_SUPPORT_DEFAULT OFF)
+  set(MTT_SUPPORT_DEFAULT OFF)
 endif()
 
 # Rockchip support is only available on Linux on arm
@@ -135,6 +148,7 @@ option(TPU_SUPPORT "Build support for Google TPUs through GRPC" ${TPU_SUPPORT_DE
 option(ROCKCHIP_SUPPORT "Enable support for Rockchip NPU" ${ROCKCHIP_SUPPORT_DEFAULT})
 option(METAX_SUPPORT "Build support for MetaX GPUs through libmxsml" ${METAX_SUPPORT_DEFAULT})
 option(ENFLAME_SUPPORT "Build support for Enflame GCUs through libefml" ${ENFLAME_SUPPORT_DEFAULT})
+option(MTT_SUPPORT "Build support for MTT GPUs through libmtml" ${MTT_SUPPORT_DEFAULT})
 
 add_subdirectory(src)
 

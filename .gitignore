@@ -4,3 +4,15 @@ build/
 cmake-build*/
 .vscode
 .idea
+# clangd 缓存
+.cache/
+.clangd/
+*.idx
+
+# 编译生成文件
+*.so
+*.a
+
+# IDE/编辑器文件
+*.swp
+*.swo

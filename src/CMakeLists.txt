@@ -160,6 +160,14 @@ if(ENFLAME_SUPPORT)
   target_sources(nvtop PRIVATE extract_gcuinfo_enflame.c)
 endif()
 
+if(MTT_SUPPORT)
+  message(STATUS "Building with MTT GPU support")
+  target_sources(nvtop PRIVATE extract_gpuinfo_mtt.c)
+  if (LIBMTML)
+    target_link_libraries(nvtop PRIVATE ${LIBMTML})
+  endif()
+endif()
+
 target_include_directories(nvtop PRIVATE
   ${PROJECT_SOURCE_DIR}/include
   ${PROJECT_BINARY_DIR}/include)
