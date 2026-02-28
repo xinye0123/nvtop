@@ -1,5 +1,6 @@
 Screenshot
-![MTT](/QQ20260228-180730.png)
+
+![MTT](/screenshot/mtt.png)
 
 NVTOP
 =====
